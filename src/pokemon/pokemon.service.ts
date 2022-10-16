@@ -10,6 +10,7 @@ import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { Pokemon } from './entities/pokemon.entity';
 import { eq } from 'lodash';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Injectable()
 export class PokemonService {
@@ -24,6 +25,16 @@ export class PokemonService {
     } catch (error) {
       this.handleExceptions(error);
     }
+  }
+
+  async findAllPageable(paginationDto: PaginationDto) {
+    const { limit = 10, offset = 0 } = paginationDto;
+    return await this.pokemonModel
+      .find()
+      .limit(limit)
+      .skip(offset)
+      .sort({ no: 1 })
+      .select('-__v');
   }
 
   async findAll() {
@@ -78,6 +89,16 @@ export class PokemonService {
       throw new BadRequestException(`Pokemon id not found, ${id}`);
 
     return 'Pokemon has been deleted successfully';
+  }
+
+  async insertAll(pokemonsArray: CreatePokemonDto[]) {
+    await this.pokemonModel.insertMany(pokemonsArray);
+    return 'All Pokemons has been added successfully';
+  }
+
+  async removeAll() {
+    await this.pokemonModel.deleteMany({});
+    return 'All Pokemons has been deleted successfully';
   }
 
   private handleExceptions(error: any) {

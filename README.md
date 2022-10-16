@@ -39,6 +39,12 @@ $ yarn install
 $ docker-compose up -d
 ```
 
+## Populate database from seed sevice
+
+```bash
+http://localhost:3000/api/v1/seed
+```
+
 ## Running the app
 
 ```bash

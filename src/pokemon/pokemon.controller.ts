@@ -9,11 +9,13 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { PokemonService } from './pokemon.service';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
+import { PaginationDto } from '../common/dto';
 
 @Controller('pokemon')
 export class PokemonController {
@@ -27,9 +29,14 @@ export class PokemonController {
     return this.pokemonService.create(createPokemonDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.pokemonService.findAll();
+  }
+
+  @Get()
+  findPageable(@Query() paginationDto: PaginationDto) {
+    return this.pokemonService.findAllPageable(paginationDto);
   }
 
   @Get(':keywords')
