@@ -39,6 +39,8 @@ $ yarn install
 $ docker-compose up -d
 ```
 
+## Rename **.env-template** file to **.env** into the projecto and setting your local environment variables
+
 ## Populate database from seed sevice
 
 ```bash
