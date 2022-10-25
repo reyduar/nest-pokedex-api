@@ -59,3 +59,20 @@ $ yarn run start:dev
 # production mode
 $ yarn run start:prod
 ```
+
+### Test Heroku Deployment
+
+```bash
+$ curl https://nest-pdex-api.herokuapp.com/api/v1/pokemon/all
+```
+
+### Production Build
+
+1. Create `.env.prod` file.
+
+2. Set environment variables to production (MONGODB, PORT, etc,).
+
+3. First time create the new image:
+   `docker-compose -f docker-compose.prod.yaml --env-file .env.prod up --build`
+4. Second time use:
+   `docker-compose -f docker-compose.prod.yaml --env-file .env.prod up -d`
